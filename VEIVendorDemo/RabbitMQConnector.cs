@@ -18,6 +18,7 @@ namespace VEIVendorDemo
         private string consumerTag = "";
 
         private List<Stock> stockList = new List<Stock>();
+        private HttpMessageHandler messageHandler = new HttpClientHandler { SslProtocols = System.Security.Authentication.SslProtocols.Tls12};
 
         internal Action<string>? MessageReceived;
 
@@ -88,11 +89,25 @@ namespace VEIVendorDemo
                             await ReceiveMasterData(data);
                         }
                     }
+                    else if (msgType == "material-stock-sync")
+                    {
+                        var data = node["body"].Deserialize<StockData>();
+                        if(data!=null)
+                        {
+                            await ReceiveStockData(data);
+                        }
+                    }
+                    else if (msgType == "material-stock-lock")
+                    {
+                        var data = node["body"].Deserialize<StockLockData>();
+                        if (data != null)
+                        {
+                            //处理锁库消息
+                            //此处省略具体业务逻辑代码
+                        }
+                    }
                 }
 
-
-                
-                Console.WriteLine($" [x] Received '{routingKey}':'{message}'");
                 MessageReceived?.Invoke(message);
 
                 await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
@@ -129,6 +144,32 @@ namespace VEIVendorDemo
             }
         }
 
+        internal async Task ReceiveStockData(StockData data)
+        {
+            if (stockList.Any(s => s.material == data.material))
+            {
+                var stock = stockList.First(s => s.material == data.material);
+                stock.quantity = data.quantity;
+                stock.lockQty = data.lockQuantity;
+            }
+        }
+
+        internal async Task ReceiveStockLockData(StockLockData data)
+        {
+            if (stockList.Any(s => s.material == data.material))
+            {
+                var stock = stockList.First(s => s.material == data.material);
+                if(data.behavior == "lock")
+                {
+                    stock.lockQty += data.quantity;
+                }
+                else
+                {
+                    stock.lockQty -= data.quantity;
+                }
+            }
+        }
+
         internal async Task BasicConsumerAsync(string queueName)
         {
             if (channel != null && channel.IsOpen && !string.IsNullOrEmpty(consumerTag))
@@ -144,6 +185,17 @@ namespace VEIVendorDemo
 
             consumerTag = await channel!.BasicConsumeAsync(queueName.Trim(), autoAck: false, consumer: consumer!);
         }
+
+        internal async Task SendFullStock()
+        {
+
+        }
+
+        private async Task CallAPI()
+        {
+            HttpClient client = new HttpClient(messageHandler);
+
+        }
     }
 
     internal record MasterData(string material, string materialDesc, string longText, string purLongText, string unit, string matType, bool deleted, bool fullInventory)
@@ -155,4 +207,9 @@ namespace VEIVendorDemo
     {
 
     }
+
+    internal record StockData(string material, string type, decimal quantity, string unit, decimal validQuantity, decimal lockQuantity);
+
+    internal record StockLockData(string material, string materialDesc, string behavior, decimal quantity, string unit);
+
 }

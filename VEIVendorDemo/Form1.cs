@@ -12,12 +12,12 @@ namespace VEIVendorDemo
     {
 
         private RabbitMQConnector _connector;
+        private readonly ICallApiService _apiService;
 
-
-        public Form1()
+        public Form1(ICallApiService apiService)
         {
             InitializeComponent();
-
+            _apiService = apiService;
         }
 
         private async Task BuildConnection()
@@ -35,6 +35,7 @@ namespace VEIVendorDemo
                         sb.Append(richTextBox1.Text);
                         sb.AppendLine();
                         sb.AppendLine("================================");
+                        sb.AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         sb.AppendLine(msg);
                         sb.AppendLine("================================");
                         richTextBox1.Text = sb.ToString();
@@ -72,6 +73,12 @@ namespace VEIVendorDemo
             await BuildConnection();
             bindingSource1.DataSource = _connector.StockList;
             bindingSource2.DataSource = _connector.MessageLogs;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            dataGridView1.EndEdit();
+
         }
     }
 
