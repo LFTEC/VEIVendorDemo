@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,12 @@ using System.Text.Json.Nodes;
 
 namespace VEIVendorDemo
 {
-    internal class RabbitMQConnector
+    public interface IRabbitMQConnector
+    {
+        public void Build(Action<string> messageReceived);
+        public Task BasicConsumerAsync(string queueName);
+    }
+    public class RabbitMQConnector: IRabbitMQConnector, IHostedService
     {
         private ConnectionFactory? factory;
         private IConnection? connection;
@@ -18,29 +25,27 @@ namespace VEIVendorDemo
         private string consumerTag = "";
 
         private List<Stock> stockList = new List<Stock>();
-        private HttpMessageHandler messageHandler = new HttpClientHandler { SslProtocols = System.Security.Authentication.SslProtocols.Tls12};
+        private readonly RabbitMQSettings options;
 
         internal Action<string>? MessageReceived;
 
         public List<Stock> StockList { get=> stockList; set=> stockList=value; }
         public List<Log> MessageLogs { get; } = new List<Log>();
 
-        internal static async Task<RabbitMQConnector> GetInstance()
+        public RabbitMQConnector(IOptions<RabbitMQSettings> options)
         {
-            var instance = new RabbitMQConnector();
-            await instance.InitialObjectAsync();
-            return instance;
+            this.options = options.Value;
+            
         }
-
         internal async Task InitialObjectAsync()
         {
 
             factory = new ConnectionFactory()
             {
-                HostName = "121.36.58.218",
-                VirtualHost = "vei",
-                Port = 5671,
-                CredentialsProvider = new BasicCredentialsProvider("root", "root", "Xiangaimima@1"),
+                HostName = options.HostName!,
+                VirtualHost = options.VirtualHost!,
+                Port = options.Port,
+                CredentialsProvider = new BasicCredentialsProvider(options.UserName, options.UserName!, options.Password!),
                 Ssl = new SslOption
                 {
                     Enabled = true,
@@ -170,7 +175,7 @@ namespace VEIVendorDemo
             }
         }
 
-        internal async Task BasicConsumerAsync(string queueName)
+        public async Task BasicConsumerAsync(string queueName)
         {
             if (channel != null && channel.IsOpen && !string.IsNullOrEmpty(consumerTag))
             {
@@ -186,15 +191,36 @@ namespace VEIVendorDemo
             consumerTag = await channel!.BasicConsumeAsync(queueName.Trim(), autoAck: false, consumer: consumer!);
         }
 
-        internal async Task SendFullStock()
-        {
 
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            await InitialObjectAsync();
         }
 
-        private async Task CallAPI()
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
-            HttpClient client = new HttpClient(messageHandler);
+            if (channel != null)
+            {
+                await channel.CloseAsync();
+                channel.Dispose();
+            }
 
+            if(connection != null)
+            {
+                await connection.CloseAsync();
+                connection.Dispose();
+            }
+        }
+
+        public void Build(Action<string> messageReceived)
+        {
+            this.MessageReceived = messageReceived;
+        }
+
+        public Task SendFullStock()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -211,5 +237,13 @@ namespace VEIVendorDemo
     internal record StockData(string material, string type, decimal quantity, string unit, decimal validQuantity, decimal lockQuantity);
 
     internal record StockLockData(string material, string materialDesc, string behavior, decimal quantity, string unit);
+
+    public class StockMoveData
+    {
+        public string Vendor { get; set; } = string.Empty;
+        public List<StockMoveItem> Items { get; private set; } = new List<StockMoveItem>();
+    }
+
+    public record StockMoveItem(string material, string matType, string moveType, decimal quantity, string unit, string text);
 
 }
