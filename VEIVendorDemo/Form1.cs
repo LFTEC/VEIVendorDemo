@@ -103,9 +103,9 @@ namespace VEIVendorDemo
                 {
                     Vendor = textBox1.Text,
                 };
-                stockMoveData.Items.AddRange(_connector.StockList.Where(s=>s.offset != 0m).Select(s =>
+                stockMoveData.Items.AddRange(_connector.StockList.Where(s => s.offset != 0m).Select(s =>
                 {
-                    return new StockMoveItem(s.material, s.matType, s.offset > 0 ? "increase": "decrease", System.Math.Abs(s.offset), s.unit, "库存调整");
+                    return new StockMoveItem(s.material, s.matType, s.offset > 0 ? "increase" : "decrease", System.Math.Abs(s.offset), s.unit, "库存调整");
 
                 }));
 
@@ -123,6 +123,15 @@ namespace VEIVendorDemo
             {
                 MessageBox.Show($"发送库存调整请求时发生错误: {ex.Message}");
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            _connector.MessageLogs.Clear();
+            _connector.StockList.Clear();
+            richTextBox1.Text = "";
+            bindingSource1.ResetBindings(false);
+            bindingSource2.ResetBindings(false);
         }
     }
 

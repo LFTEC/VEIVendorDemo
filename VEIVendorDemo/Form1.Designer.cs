@@ -63,6 +63,7 @@
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
+            button4 = new Button();
             tableLayoutPanel1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -83,12 +84,11 @@
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(2, 2, 2, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 59F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(888, 577);
+            tableLayoutPanel1.Size = new Size(1395, 815);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // tabControl1
@@ -97,21 +97,19 @@
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(2, 44);
-            tabControl1.Margin = new Padding(2, 2, 2, 2);
+            tabControl1.Location = new Point(3, 62);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(884, 531);
+            tabControl1.Size = new Size(1389, 750);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(dataGridView1);
-            tabPage1.Location = new Point(4, 26);
-            tabPage1.Margin = new Padding(2, 2, 2, 2);
+            tabPage1.Location = new Point(4, 33);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(2, 2, 2, 2);
-            tabPage1.Size = new Size(876, 501);
+            tabPage1.Padding = new Padding(3, 3, 3, 3);
+            tabPage1.Size = new Size(1381, 713);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "库存";
             tabPage1.UseVisualStyleBackColor = true;
@@ -123,11 +121,10 @@
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { materialDataGridViewTextBoxColumn, materialDescDataGridViewTextBoxColumn, longTextDataGridViewTextBoxColumn, purLongTextDataGridViewTextBoxColumn, deletedDataGridViewCheckBoxColumn, quantity, offset, lockQty, unitDataGridViewTextBoxColumn, matTypeDataGridViewTextBoxColumn });
             dataGridView1.DataSource = bindingSource1;
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(2, 2);
-            dataGridView1.Margin = new Padding(2, 2, 2, 2);
+            dataGridView1.Location = new Point(3, 3);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(872, 497);
+            dataGridView1.Size = new Size(1375, 707);
             dataGridView1.TabIndex = 0;
             // 
             // materialDataGridViewTextBoxColumn
@@ -225,11 +222,10 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(dataGridView2);
-            tabPage2.Location = new Point(4, 26);
-            tabPage2.Margin = new Padding(2, 2, 2, 2);
+            tabPage2.Location = new Point(4, 33);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(2, 2, 2, 2);
-            tabPage2.Size = new Size(876, 501);
+            tabPage2.Padding = new Padding(3, 3, 3, 3);
+            tabPage2.Size = new Size(1381, 713);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "日志";
             tabPage2.UseVisualStyleBackColor = true;
@@ -241,11 +237,10 @@
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { msgIdDataGridViewTextBoxColumn, msgTypeDataGridViewTextBoxColumn, sourceDataGridViewTextBoxColumn, versionDataGridViewTextBoxColumn, traceIdDataGridViewTextBoxColumn, bodyDataGridViewTextBoxColumn, timestampDataGridViewTextBoxColumn, routingKeyDataGridViewTextBoxColumn });
             dataGridView2.DataSource = bindingSource2;
             dataGridView2.Dock = DockStyle.Fill;
-            dataGridView2.Location = new Point(2, 2);
-            dataGridView2.Margin = new Padding(2, 2, 2, 2);
+            dataGridView2.Location = new Point(3, 3);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.Size = new Size(872, 497);
+            dataGridView2.Size = new Size(1375, 707);
             dataGridView2.TabIndex = 0;
             // 
             // msgIdDataGridViewTextBoxColumn
@@ -319,10 +314,9 @@
             // tabPage3
             // 
             tabPage3.Controls.Add(richTextBox1);
-            tabPage3.Location = new Point(4, 26);
-            tabPage3.Margin = new Padding(2, 2, 2, 2);
+            tabPage3.Location = new Point(4, 33);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(876, 501);
+            tabPage3.Size = new Size(1381, 713);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "文本Log";
             tabPage3.UseVisualStyleBackColor = true;
@@ -331,9 +325,8 @@
             // 
             richTextBox1.Dock = DockStyle.Fill;
             richTextBox1.Location = new Point(0, 0);
-            richTextBox1.Margin = new Padding(2, 2, 2, 2);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(876, 501);
+            richTextBox1.Size = new Size(1381, 713);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = "";
             // 
@@ -345,39 +338,36 @@
             flowLayoutPanel1.Controls.Add(button1);
             flowLayoutPanel1.Controls.Add(button2);
             flowLayoutPanel1.Controls.Add(button3);
-            flowLayoutPanel1.Location = new Point(2, 2);
-            flowLayoutPanel1.Margin = new Padding(2, 2, 2, 2);
+            flowLayoutPanel1.Controls.Add(button4);
+            flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(0, 7, 0, 0);
-            flowLayoutPanel1.Size = new Size(398, 35);
+            flowLayoutPanel1.Padding = new Padding(0, 10, 0, 0);
+            flowLayoutPanel1.Size = new Size(734, 50);
             flowLayoutPanel1.TabIndex = 1;
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
-            label1.Location = new Point(2, 12);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(3, 18);
             label1.Name = "label1";
-            label1.Size = new Size(68, 17);
+            label1.Size = new Size(100, 24);
             label1.TabIndex = 0;
             label1.Text = "绑定供应商";
             // 
             // textBox1
             // 
             textBox1.Anchor = AnchorStyles.None;
-            textBox1.Location = new Point(74, 9);
-            textBox1.Margin = new Padding(2, 2, 2, 2);
+            textBox1.Location = new Point(109, 15);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(97, 23);
+            textBox1.Size = new Size(150, 30);
             textBox1.TabIndex = 1;
             // 
             // button1
             // 
-            button1.Location = new Point(175, 9);
-            button1.Margin = new Padding(2, 2, 2, 2);
+            button1.Location = new Point(265, 13);
             button1.Name = "button1";
-            button1.Size = new Size(71, 24);
+            button1.Size = new Size(112, 34);
             button1.TabIndex = 2;
             button1.Text = "绑定";
             button1.UseVisualStyleBackColor = true;
@@ -385,10 +375,9 @@
             // 
             // button2
             // 
-            button2.Location = new Point(250, 9);
-            button2.Margin = new Padding(2, 2, 2, 2);
+            button2.Location = new Point(383, 13);
             button2.Name = "button2";
-            button2.Size = new Size(71, 24);
+            button2.Size = new Size(112, 34);
             button2.TabIndex = 3;
             button2.Text = "上传库存";
             button2.UseVisualStyleBackColor = true;
@@ -396,22 +385,30 @@
             // 
             // button3
             // 
-            button3.Location = new Point(325, 9);
-            button3.Margin = new Padding(2, 2, 2, 2);
+            button3.Location = new Point(501, 13);
             button3.Name = "button3";
-            button3.Size = new Size(71, 24);
+            button3.Size = new Size(112, 34);
             button3.TabIndex = 4;
             button3.Text = "上传差量";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // button4
+            // 
+            button4.Location = new Point(619, 13);
+            button4.Name = "button4";
+            button4.Size = new Size(112, 34);
+            button4.TabIndex = 5;
+            button4.Text = "清空数据";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(888, 577);
+            ClientSize = new Size(1395, 815);
             Controls.Add(tableLayoutPanel1);
-            Margin = new Padding(2, 2, 2, 2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -466,5 +463,6 @@
         private DataGridViewTextBoxColumn timestampDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn routingKeyDataGridViewTextBoxColumn;
         private Button button3;
+        private Button button4;
     }
 }
