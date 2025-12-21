@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "VEIVendorDemo": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

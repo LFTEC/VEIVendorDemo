@@ -107,8 +107,7 @@ namespace VEIVendorDemo
                         var data = node["body"].Deserialize<StockLockData>();
                         if (data != null)
                         {
-                            //处理锁库消息
-                            //此处省略具体业务逻辑代码
+                            await ReceiveStockLockData(data);
                         }
                     }
                 }
