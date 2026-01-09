@@ -240,6 +240,7 @@ namespace VEIVendorDemo
     public class StockMoveData
     {
         public string Vendor { get; set; } = string.Empty;
+        public string olUuid { get; set; } = string.Empty; 
         public List<StockMoveItem> Items { get; private set; } = new List<StockMoveItem>();
     }
 

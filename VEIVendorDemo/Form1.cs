@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Runtime.CompilerServices;
@@ -13,12 +14,14 @@ namespace VEIVendorDemo
 
         private RabbitMQConnector _connector;
         private readonly ICallApiService _apiService;
+        private readonly ApiSettings _apiSettings;
 
-        public Form1(ICallApiService apiService, IRabbitMQConnector connector)
+        public Form1(ICallApiService apiService, IRabbitMQConnector connector, IOptions<ApiSettings> options)
         {
             InitializeComponent();
             _apiService = apiService;
             _connector = (RabbitMQConnector)connector;
+            _apiSettings = options.Value;
 
             _connector.Build((msg) =>
             {
@@ -71,6 +74,7 @@ namespace VEIVendorDemo
                 var stockMoveData = new StockMoveData()
                 {
                     Vendor = textBox1.Text,
+                    olUuid = _apiSettings.Uuid
                 };
                 stockMoveData.Items.AddRange(_connector.StockList.Select(s =>
                 {
