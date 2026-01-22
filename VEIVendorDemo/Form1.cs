@@ -106,6 +106,7 @@ namespace VEIVendorDemo
                 var stockMoveData = new StockMoveData()
                 {
                     Vendor = textBox1.Text,
+                    olUuid = _apiSettings.Uuid
                 };
                 stockMoveData.Items.AddRange(_connector.StockList.Where(s => s.offset != 0m).Select(s =>
                 {
